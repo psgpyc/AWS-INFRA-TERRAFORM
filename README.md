@@ -13,6 +13,7 @@ This repository contains Terraform configurations for provisioning and managing 
 
 ## Repository Structure
 
+```bash
 aws-terraform-configs/
 ├── s3/
 │   ├── main.tf
@@ -47,3 +48,4 @@ aws-terraform-configs/
 ├── .gitignore
 ├── README.md
 └── versions.tf
+```
