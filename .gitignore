@@ -1,0 +1,104 @@
+# === Terraform ===
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+.terraform/
+.terraform.lock.hcl
+terraform.tfplan
+plan.out
+secrets.auto.tfvars
+
+# === Python ===
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+.pytest_cache/
+.cache/
+*.log
+*.sqlite3
+
+# Virtual environments
+.env/
+.venv/
+venv/
+ENV/
+env.bak/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb~  # temporary notebook autosave
+
+# AWS credentials and config
+.aws/credentials
+.aws/config
+
+# === IDEs ===
+.vscode/
+.idea/
+*.code-workspace
+
+# === macOS ===
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# === Windows ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# === Linux ===
+*~
+.cache/
+Trash-*/
+
+
+# === General sensitive files ===
+*.pem
+*.key
+*.crt
+*.env
+.env.*
+secrets.*
+config.*
+token.*
+credentials.*
+
+# === Coverage & test reports ===
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.coverage
+*.cover
+*.py,cover
+
+# === Notebooks checkpoints & runtime ===
+.ipynb_checkpoints/
+jupyter_notebook_config.py
+
+# === Docker (if used) ===
+Dockerfile
+.dockerignore
+docker-compose.override.yml
+*.tar
+*.img
+
+# === Logs ===
+*.log
+logs/
+log/
