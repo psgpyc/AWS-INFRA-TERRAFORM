@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 module "source_bucket" {
     source = "./s3"
     bucket_name = "psgpyc-t-source-bucket-xxx"
@@ -98,4 +100,25 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
 
     }   
 }
+
+resource "aws_kms_key" "this" {
+  description = "CMK KMS Key"
+  enable_key_rotation = true
+  deletion_window_in_days = 30
+}
+
+resource "aws_kms_key_policy" "this" {
+  key_id = aws_kms_key.this.id
+  policy = templatefile(
+    "./policies/s3_kms_key_policy.json.tpl",
+    {
+      caller_account_id = data.aws_caller_identity.current.account_id
+    }
+
+  )
+  
+}
+
+
+
 
