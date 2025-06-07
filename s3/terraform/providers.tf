@@ -1,5 +1,5 @@
 provider "aws" {
-    profile = "psgpyceltify"
-    region = var.aws_region
-  
+  profile = "psgpyceltify"
+  region  = var.aws_region
+
 }
