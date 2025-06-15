@@ -19,8 +19,6 @@ resource "aws_subnet" "public" {
     
     cidr_block = var.public_subnet_cidr_block
 
-    map_customer_owned_ip_on_launch = true
-
     availability_zone = var.public_subnet_availability_zone
 
 
@@ -105,9 +103,9 @@ resource "aws_route_table" "wh-private-subnet-rt" {
   vpc_id = aws_vpc.this.id
 
 
-  route = {
+  route {
     cidr_block = local.catch_all_ip
-    aws_nat_gateway = aws_nat_gateway.this.id
+    gateway_id = aws_nat_gateway.this.id
   }
 
   tags = {

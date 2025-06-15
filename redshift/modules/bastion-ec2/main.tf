@@ -4,11 +4,11 @@ resource "aws_instance" "this" {
 
     instance_type = var.instance_type
 
-    subnet_id = module.vpc_subnet_igw.subnets_ids["public-subnet"]
+    subnet_id = var.bastion_public_subnet_id
 
     associate_public_ip_address = var.associate_public_ip_address
 
-    vpc_security_group_ids = var.vpc_subnet_igw.security_group_id
+    vpc_security_group_ids = var.vpc_security_group_ids
 
     key_name = var.key_pair_name
 

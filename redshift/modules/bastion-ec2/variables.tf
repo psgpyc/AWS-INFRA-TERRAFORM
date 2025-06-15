@@ -23,3 +23,15 @@ variable "key_pair_name" {
     description = "Key name for your instance"
   
 }
+
+variable "bastion_public_subnet_id" {
+    type = string
+    description = "Id Subnet where bastion ec2 is to be placed"
+  
+}
+
+variable "vpc_security_group_ids" {
+    type = list(string)
+    description = ""
+  
+}
