@@ -48,3 +48,9 @@ variable "key_pair_name" {
     description = "Key name for your instance"
   
 }
+
+variable "vpc_subnet_igw.security_group_id" {
+    type = list(string)
+    description = "Security group id for your instance"
+  
+}
