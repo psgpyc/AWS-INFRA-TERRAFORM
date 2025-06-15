@@ -53,5 +53,26 @@ module "bastion_ec2" {
   
 }
 
+module "redshift_cluster" {
+
+    source = "./modules/redshift"
+
+    private_subnets_ids = module.vpc_subnets_igw_nat.private_subnet_ids
+
+    vpc_security_group_ids = [module.cluster_bastion_sg.redshift_sg_id]
+
+    cluster_iam_roles = [module.i_am_roles.iam_role_arn]
+
+
+    cluster_identifier = var.cluster_identifier
+    node_type          = var.node_type
+    database_name      = var.database_name
+    master_username    = var.master_username
+    master_password    = var.master_password # not using secrets manager for now
+    cluster_type       = var.cluster_type
+    number_of_nodes    = var.number_of_nodes
+  
+}
+
 
 

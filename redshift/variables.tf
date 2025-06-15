@@ -62,3 +62,52 @@ variable "key_pair_name" {
     description = "Key name for your instance"
   
 }
+
+
+# redshift cluster
+
+
+variable "cluster_identifier" {
+    type = string
+    description = "Name of your redshift cluster"
+  
+}
+
+
+
+variable "node_type" {
+    type = string
+    description = "The node type to be provisioned for the cluster."
+}
+
+variable "number_of_nodes" {
+    type = string
+    description = "The number of compute nodes in the cluster."
+  
+}
+
+
+variable "database_name" {
+    type = string
+    description = "The name of the first database to be created when the cluster is created"
+}
+
+
+variable "master_username" {
+    type = string
+    description = "Password for the master DB user"
+}
+
+variable "master_password" {
+    type = string
+    description = "Password for the master DB user."
+  
+}
+
+variable "cluster_type" {
+    type = string
+    default = "multi-node"
+    description = "The cluster type to use."
+  
+}
+

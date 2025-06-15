@@ -17,7 +17,13 @@ resource "aws_redshift_cluster" "main" {
     vpc_security_group_ids = var.vpc_security_group_ids
     iam_roles = var.cluster_iam_roles
 
+    availability_zone_relocation_enabled = true
+
     publicly_accessible = false
+
+    skip_final_snapshot = true
+
+    multi_az = true
 
     cluster_subnet_group_name = aws_redshift_subnet_group.this.name
   

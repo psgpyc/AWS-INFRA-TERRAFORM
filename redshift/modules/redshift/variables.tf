@@ -4,9 +4,10 @@ variable "private_subnets_ids" {
   
 }
 
-variable "cluster_identifier" {
-    type = string
-    description = "Name of your redshift cluster"
+variable "vpc_security_group_ids" {
+    type = list(string)
+    description = "A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster."
+
   
 }
 
@@ -16,12 +17,15 @@ variable "cluster_iam_roles" {
   
 }
 
-variable "vpc_security_group_ids" {
-    type = list(string)
-    description = "A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster."
 
+
+
+variable "cluster_identifier" {
+    type = string
+    description = "Name of your redshift cluster"
   
 }
+
 
 
 variable "node_type" {
