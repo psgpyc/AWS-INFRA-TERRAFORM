@@ -53,6 +53,8 @@ module "bastion_ec2" {
   
 }
 
+
+
 module "redshift_cluster" {
 
     source = "./modules/redshift"
@@ -76,3 +78,32 @@ module "redshift_cluster" {
 
 
 
+module "log_cluster_to_s3" {
+    source = "./modules/s3"
+
+    bucket_name = var.bucket_name
+
+    bucket_access_policy = templatefile(
+        "./policies/allow_redshift_s3_bucket_policy.json.tpl", 
+        {
+            cluster_iam_role_arn = module.i_am_roles.iam_role_arn,
+            bucket_arn = "arn:aws:s3:::${var.bucket_name}"
+        }
+    )
+  
+}
+
+
+
+
+
+
+resource "aws_redshift_logging" "this" {
+    cluster_identifier = module.redshift_cluster.cluster_id
+    log_destination_type = "s3"
+    bucket_name = module.log_cluster_to_s3.bucket_name
+    s3_key_prefix = "logs/"
+
+    depends_on = [ module.redshift_cluster ]
+  
+}

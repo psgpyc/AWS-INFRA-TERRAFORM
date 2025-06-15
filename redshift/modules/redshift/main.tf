@@ -14,10 +14,11 @@ resource "aws_redshift_cluster" "main" {
     cluster_type       = var.cluster_type
     number_of_nodes    = var.number_of_nodes
 
+    enhanced_vpc_routing = true
+    
+    encrypted = true
     vpc_security_group_ids = var.vpc_security_group_ids
     iam_roles = var.cluster_iam_roles
-
-    availability_zone_relocation_enabled = true
 
     publicly_accessible = false
 
@@ -26,5 +27,9 @@ resource "aws_redshift_cluster" "main" {
     multi_az = true
 
     cluster_subnet_group_name = aws_redshift_subnet_group.this.name
+
+    
+
+   
   
 }
