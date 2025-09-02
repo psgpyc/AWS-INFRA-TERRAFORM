@@ -1,4 +1,4 @@
 provider "aws" {
-    profile = "sikka"
-    region = "eu-west-2"
+  profile = "sikka"
+  region  = "eu-west-2"
 }
