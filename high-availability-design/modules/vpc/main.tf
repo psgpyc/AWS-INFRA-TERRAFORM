@@ -107,7 +107,11 @@ resource "aws_nat_gateway" "this" {
 
 }
 
-
+# 
+# Create a route table for public subnets.
+# This route table directs all outbound traffic (0.0.0.0/0) to the Internet Gateway,
+# enabling internet access for resources in public subnets.
+#
 resource "aws_route_table" "public" {
 
   vpc_id = aws_vpc.this.id
@@ -122,7 +126,10 @@ resource "aws_route_table" "public" {
   }  
 }
 
-
+# 
+# Associate public subnets with the public route table.
+# This ensures that traffic from public subnets follows the routes defined in the public route table.
+#
 resource "aws_route_table_association" "public-rt" {
 
   for_each = {
@@ -136,7 +143,11 @@ resource "aws_route_table_association" "public-rt" {
   
 }
 
-
+# 
+# Create private route tables, one per availability zone.
+# Each private route table routes all outbound traffic to the NAT Gateway in the corresponding AZ,
+# allowing private subnets to access the internet securely via NAT.
+#
 resource "aws_route_table" "private" {
 
   vpc_id = aws_vpc.this.id
@@ -154,7 +165,11 @@ resource "aws_route_table" "private" {
   
 }
 
-
+# 
+# Associate private subnets with their respective private route tables.
+# The association is done by matching subnets to route tables based on availability zone,
+# ensuring private subnet traffic is routed through the correct NAT Gateway.
+#
 resource "aws_route_table_association" "private-rt" {
 
   for_each = {
