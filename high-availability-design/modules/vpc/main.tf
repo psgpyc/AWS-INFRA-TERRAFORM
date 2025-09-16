@@ -1,6 +1,7 @@
 locals {
   # Define a common prefix used for naming AWS resources in this module
   prefix = "eltify"
+  catch_all = "0.0.0.0/0"
 }
 
 # Create the main VPC with the specified CIDR block
@@ -24,6 +25,8 @@ resource "aws_vpc" "this" {
 #
 # Tags are applied for clear identification, including subnet type and AZ.
 #
+
+
 resource "aws_subnet" "this" {
 
   vpc_id = aws_vpc.this.id
@@ -102,7 +105,65 @@ resource "aws_nat_gateway" "this" {
 
   depends_on = [ aws_internet_gateway.this, aws_eip.this ]
 
+}
 
+
+resource "aws_route_table" "public" {
+
+  vpc_id = aws_vpc.this.id
+
+  route {
+    cidr_block = local.catch_all
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = {
+    Name = "public-subnet-rt"
+  }  
+}
+
+
+resource "aws_route_table_association" "public-rt" {
+
+  for_each = {
+    for ps in aws_subnet.this:
+      ps.availability_zone => ps.id if try(ps.tags["Type"], "") == "public"
+  }
+
+  subnet_id = each.value
+  route_table_id = aws_route_table.public.id
 
   
+}
+
+
+resource "aws_route_table" "private" {
+
+  vpc_id = aws_vpc.this.id
+
+  for_each = aws_nat_gateway.this
+
+  route {
+    cidr_block = local.catch_all
+    gateway_id = each.value.id
+  }
+
+  tags = {
+    Name = "private-rt-${each.key}"
+  }
+  
+}
+
+
+resource "aws_route_table_association" "private-rt" {
+
+  for_each = {
+    for i , ps in aws_subnet.this:
+      "${ps.availability_zone}-${i}" => ps if try(ps.tags["Type"], "") == "private"
+  }
+
+  subnet_id = each.value.id
+
+  route_table_id = aws_route_table.private[each.value.availability_zone].id
+ 
 }
